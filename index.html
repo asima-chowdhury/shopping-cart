@@ -25,11 +25,11 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="removeItem" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="numberOfItem" type="text" class="form-control text-center" value="1">
+                           <button id="addItem" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$1219</h5>
+                        <h5>$ <span id="phonePrice">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -77,6 +77,28 @@
          </div>
       </div>
    </section>
+   <script>
+      //add item event handler
+      const addItemBtn = document.getElementById("addItem");
+      count = 1;
+      addItemBtn.addEventListener("click",function(){
+         count++;
+         const itemValue = document.getElementById("numberOfItem").value ;
+         const itemNumber= parseFloat(itemValue);
+         document.getElementById("numberOfItem").value = count;
+
+         //get phone Price
+         const phonePriceValue = document.getElementById("phonePrice").innerText;
+         const phoneItemPrice = parseFloat(phonePriceValue);
+         console.log('phoneItemPrice',phoneItemPrice);
+
+         // set phone price
+         const totalPhonePrice = phoneItemPrice * count;
+         console.log('totalPhonePrice',totalPhonePrice);
+
+         // document.getElementById("phonePrice").innerText = totalPhonePrice;
+      })
+   </script>
 </body>
 
 </html>
