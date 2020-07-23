@@ -26,10 +26,10 @@
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
                            <button id="minusPhoneBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="numOfPhone" type="text" class="form-control text-center" value="1">
+                           <input id="numOfPhone" type="text" class="form-control text-center" value="0">
                            <button id="plusPhoneBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$ <span id="phonePrice">1219</span></h5>
+                        <h5>$ <span id="phonePrice">0</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -44,11 +44,11 @@
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
                            <button id="minusCaseBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="numOfCase" type="text" class="form-control text-center" value="1">
+                           <input id="numOfCase" type="text" class="form-control text-center" value="0">
                            <button id="plusCaseBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$ <span id="casePrice">59</span></h5>
+                        <h5>$ <span id="casePrice">0</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$ <span id="subTotal">0</span></h5>
+                        <h5>$ <span id="tax">3</span></h5>
+                        <h5>$ <span id="total">0</span></h5>
                      </div>
                   </div>
                </div>
@@ -79,65 +79,81 @@
    </section>
    <script>
       //-----------------plus phone button event handler---------------------
-      const plusPhoneBtn = document.getElementById("plusPhoneBtn");
-      count = 1;
-      plusPhoneBtn.addEventListener("click", function () {
-         count++;
-         updateQuantity("numOfPhone", "phonePrice");
-         incrementPrice("phonePrice", 1219, count);
+      const plusPhoneBtn = document.getElementById("plusPhoneBtn");     
+      plusPhoneBtn.addEventListener("click", function () {         
+         incrementQuantity("numOfPhone", "phonePrice", 1219);
       })
 
       //-----------------minus phone button event handler---------------------
       const minusPhoneBtn = document.getElementById("minusPhoneBtn");
       minusPhoneBtn.addEventListener("click", function () {
-         count--;
-         updateQuantity("numOfPhone", "phonePrice");
-         decrementPrice("numOfPhone", "phonePrice", 1219, count);
+         decrementQuantity("numOfPhone", "phonePrice", 1219);
       })
 
       //-----------------plus case button event handler---------------------
       const plusCaseBtn = document.getElementById("plusCaseBtn");
-      count = 1;
       plusCaseBtn.addEventListener("click", function () {
-         count++;
-         updateQuantity("numOfCase", "casePrice");
-         incrementPrice("casePrice", 59, count);
+         incrementQuantity("numOfCase", "casePrice", 59);
       })
 
       //-----------------minus case button event handler---------------------
       const minusCaseBtn = document.getElementById("minusCaseBtn");
       minusCaseBtn.addEventListener("click", function () {
-         count--;
-         updateQuantity("numOfCase", "casePrice");
-         decrementPrice("numOfCase", "casePrice", 59, count);
+       decrementQuantity("numOfCase", "casePrice", 59);
       })
+      //----------------- function of increment item & price ---------------------
+      function incrementQuantity(numOfItemId, priceId ,itemPrice){
+         //----item----
+         const quantity = document.getElementById(numOfItemId).value;
+         const quantityNumber = parseInt(quantity);
+         const updatedQuantity = quantityNumber +1;
+         document.getElementById(numOfItemId).value = updatedQuantity;
 
-      function updateQuantity(numOfItemId, priceId){
-         const updateQuantity = document.getElementById(numOfItemId).value;
-         const updateQuantityNumber = parseInt(updateQuantity);
-         document.getElementById(numOfItemId).value = count;
-
-         //get Price
+         //----get Price----
          const priceValue = document.getElementById(priceId).innerText;
-         const itemPrice = parseInt(priceValue);
-      }
 
-      function incrementPrice(priceId, price, count){
-         // set price
-         const totalIncreasedPrice = price * count;
+         //----set Price----
+         const totalIncreasedPrice = itemPrice * updatedQuantity;
          document.getElementById(priceId).innerText = totalIncreasedPrice;
+         
+         //----subtotal----
+         const subTotal = document.getElementById("subTotal").innerText;
+         console.log(subTotal);
+         const subTotalNumber = parseInt(subTotal);
+         console.log(subTotalNumber);
+         document.getElementById("subTotal").innerText = subTotalNumber + itemPrice;
+         //----tax----
+         const tax = document.getElementById("tax").innerText;
+         const taxNumber = parseInt(tax);
+         document.getElementById("total").innerText = subTotalNumber + itemPrice + taxNumber;
       }
+      //----------------- function of Decrement item & price ---------------------
+      function decrementQuantity(numOfItemId, priceId ,itemPrice){
+         //----item----
+         const quantity = document.getElementById(numOfItemId).value;
+         const quantityNumber = parseInt(quantity);
+         if(quantityNumber >=1 ){
+            const updatedQuantity = quantityNumber -1;
+            document.getElementById(numOfItemId).value = updatedQuantity;
 
-      function decrementPrice(numOfItemId, priceId, price, count){
-         // set decrease price
-         const totalDecreasedPrice = -(price * -count);
-         if (count < 0) {
-            document.getElementById(numOfItemId).value = 0;
-            totalDecreasedPrice = 0;
+            //----get Price----
+            const priceValue = document.getElementById(priceId).innerText;
+
+            //----set Price----
+            const totalDecreasedPrice = itemPrice * updatedQuantity;
+            document.getElementById(priceId).innerText = totalDecreasedPrice;
+            //----subtotal----
+            const subTotal = document.getElementById("subTotal").innerText;
+            console.log(subTotal);
+            const subTotalNumber = parseInt(subTotal);
+            console.log(subTotalNumber);
+            document.getElementById("subTotal").innerText = subTotalNumber - itemPrice;
+            //----tax----
+            const tax = document.getElementById("tax").innerText;
+            const taxNumber = parseInt(tax);
+            document.getElementById("total").innerText = subTotalNumber - itemPrice - taxNumber;
          }
-         document.getElementById(priceId).innerText = totalDecreasedPrice;
       }
-
 
    </script>
 </body>
