@@ -25,9 +25,9 @@
 
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button id="removeItem" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="numberOfItem" type="text" class="form-control text-center" value="1">
-                           <button id="addItem" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="minusPhoneBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="numOfPhone" type="text" class="form-control text-center" value="1">
+                           <button id="plusPhoneBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
                         <h5>$ <span id="phonePrice">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
@@ -43,12 +43,12 @@
                      </div>
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
-                           <button class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input type="text" class="form-control text-center" value="1">
-                           <button class="btn btn-default"><i class="fas fa-plus"></i></button>
+                           <button id="minusCaseBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="numOfCase" type="text" class="form-control text-center" value="1">
+                           <button id="plusCaseBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$59</h5>
+                        <h5>$ <span id="casePrice">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -78,26 +78,67 @@
       </div>
    </section>
    <script>
-      //add item event handler
-      const addItemBtn = document.getElementById("addItem");
+      //-----------------plus phone button event handler---------------------
+      const plusPhoneBtn = document.getElementById("plusPhoneBtn");
       count = 1;
-      addItemBtn.addEventListener("click",function(){
+      plusPhoneBtn.addEventListener("click", function () {
          count++;
-         const itemValue = document.getElementById("numberOfItem").value ;
-         const itemNumber= parseFloat(itemValue);
-         document.getElementById("numberOfItem").value = count;
-
-         //get phone Price
-         const phonePriceValue = document.getElementById("phonePrice").innerText;
-         const phoneItemPrice = parseFloat(phonePriceValue);
-         console.log('phoneItemPrice',phoneItemPrice);
-
-         // set phone price
-         const totalPhonePrice = phoneItemPrice * count;
-         console.log('totalPhonePrice',totalPhonePrice);
-
-         // document.getElementById("phonePrice").innerText = totalPhonePrice;
+         updateQuantity("numOfPhone", "phonePrice");
+         incrementPrice("phonePrice", 1219, count);
       })
+
+      //-----------------minus phone button event handler---------------------
+      const minusPhoneBtn = document.getElementById("minusPhoneBtn");
+      minusPhoneBtn.addEventListener("click", function () {
+         count--;
+         updateQuantity("numOfPhone", "phonePrice");
+         decrementPrice("numOfPhone", "phonePrice", 1219, count);
+      })
+
+      //-----------------plus case button event handler---------------------
+      const plusCaseBtn = document.getElementById("plusCaseBtn");
+      count = 1;
+      plusCaseBtn.addEventListener("click", function () {
+         count++;
+         updateQuantity("numOfCase", "casePrice");
+         incrementPrice("casePrice", 59, count);
+      })
+
+      //-----------------minus case button event handler---------------------
+      const minusCaseBtn = document.getElementById("minusCaseBtn");
+      minusCaseBtn.addEventListener("click", function () {
+         count--;
+         updateQuantity("numOfCase", "casePrice");
+         decrementPrice("numOfCase", "casePrice", 59, count);
+      })
+
+      function updateQuantity(numOfItemId, priceId){
+         const updateQuantity = document.getElementById(numOfItemId).value;
+         const updateQuantityNumber = parseInt(updateQuantity);
+         document.getElementById(numOfItemId).value = count;
+
+         //get Price
+         const priceValue = document.getElementById(priceId).innerText;
+         const itemPrice = parseInt(priceValue);
+      }
+
+      function incrementPrice(priceId, price, count){
+         // set price
+         const totalIncreasedPrice = price * count;
+         document.getElementById(priceId).innerText = totalIncreasedPrice;
+      }
+
+      function decrementPrice(numOfItemId, priceId, price, count){
+         // set decrease price
+         const totalDecreasedPrice = -(price * -count);
+         if (count < 0) {
+            document.getElementById(numOfItemId).value = 0;
+            totalDecreasedPrice = 0;
+         }
+         document.getElementById(priceId).innerText = totalDecreasedPrice;
+      }
+
+
    </script>
 </body>
 
