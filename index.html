@@ -26,10 +26,10 @@
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
                            <button id="minusPhoneBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="numOfPhone" type="text" class="form-control text-center" value="0">
+                           <input id="phoneItem" type="text" class="form-control text-center" value="1">
                            <button id="plusPhoneBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5>$ <span id="phonePrice">0</span></h5>
+                        <h5>$ <span id="phonePrice">1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -44,11 +44,11 @@
                      <div class="col-md-5 center-item">
                         <div class="input-group number-spinner">
                            <button id="minusCaseBtn" class="btn btn-default"><i class="fas fa-minus"></i></button>
-                           <input id="numOfCase" type="text" class="form-control text-center" value="0">
+                           <input id="caseItem" type="text" class="form-control text-center" value="1">
                            <button id="plusCaseBtn" class="btn btn-default"><i class="fas fa-plus"></i></button>
 
                         </div>
-                        <h5>$ <span id="casePrice">0</span></h5>
+                        <h5>$ <span id="casePrice">59</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$ <span id="subTotal">0</span></h5>
-                        <h5>$ <span id="tax">3</span></h5>
-                        <h5>$ <span id="total">0</span></h5>
+                        <h5>$ <span id="subTotal">1278</span> </h5>
+                        <h5>$ <span id="tax">3</span> </h5>
+                        <h5>$ <span id="total">1281</span> </h5>
                      </div>
                   </div>
                </div>
@@ -79,82 +79,95 @@
    </section>
    <script>
       //-----------------plus phone button event handler---------------------
-      const plusPhoneBtn = document.getElementById("plusPhoneBtn");     
-      plusPhoneBtn.addEventListener("click", function () {         
-         incrementQuantity("numOfPhone", "phonePrice", 1219);
+      const plusPhoneBtn = document.getElementById("plusPhoneBtn");
+      plusPhoneBtn.addEventListener("click", function () {
+         increasedValue("phoneItem", "phonePrice", 1219);
       })
-
       //-----------------minus phone button event handler---------------------
       const minusPhoneBtn = document.getElementById("minusPhoneBtn");
       minusPhoneBtn.addEventListener("click", function () {
-         decrementQuantity("numOfPhone", "phonePrice", 1219);
+         decreasedValue("phoneItem", "phonePrice", 1219);
       })
-
       //-----------------plus case button event handler---------------------
       const plusCaseBtn = document.getElementById("plusCaseBtn");
       plusCaseBtn.addEventListener("click", function () {
-         incrementQuantity("numOfCase", "casePrice", 59);
+         increasedValue("caseItem", "casePrice", 59);
       })
-
       //-----------------minus case button event handler---------------------
       const minusCaseBtn = document.getElementById("minusCaseBtn");
       minusCaseBtn.addEventListener("click", function () {
-       decrementQuantity("numOfCase", "casePrice", 59);
+         decreasedValue("caseItem", "casePrice", 59);
       })
-      //----------------- function of increment item & price ---------------------
-      function incrementQuantity(numOfItemId, priceId ,itemPrice){
-         //----item----
-         const quantity = document.getElementById(numOfItemId).value;
+      //----------------- function of increased item & price ---------------------
+      function increasedValue(itemId, priceId, singleItemPrice) {
+         // --- get item value---
+         const quantity = document.getElementById(itemId).value;
          const quantityNumber = parseInt(quantity);
-         const updatedQuantity = quantityNumber +1;
-         document.getElementById(numOfItemId).value = updatedQuantity;
+         const updatedQuantity = quantityNumber + 1;
 
-         //----get Price----
+         // --- set item value---      
+         document.getElementById(itemId).value = updatedQuantity;
+         // --- get price value---
          const priceValue = document.getElementById(priceId).innerText;
+         // const priceNumber = parseInt(priceValue);
 
-         //----set Price----
-         const totalIncreasedPrice = itemPrice * updatedQuantity;
-         document.getElementById(priceId).innerText = totalIncreasedPrice;
+         totalIncreasedPrice = singleItemPrice * updatedQuantity;
+         // --- set price value---
+         document.getElementById(priceId).innerText = totalIncreasedPrice;        
          
-         //----subtotal----
-         const subTotal = document.getElementById("subTotal").innerText;
-         console.log(subTotal);
-         const subTotalNumber = parseInt(subTotal);
-         console.log(subTotalNumber);
-         document.getElementById("subTotal").innerText = subTotalNumber + itemPrice;
-         //----tax----
-         const tax = document.getElementById("tax").innerText;
-         const taxNumber = parseInt(tax);
-         document.getElementById("total").innerText = subTotalNumber + itemPrice + taxNumber;
+         subTotalIncreased(singleItemPrice, itemId);
       }
-      //----------------- function of Decrement item & price ---------------------
-      function decrementQuantity(numOfItemId, priceId ,itemPrice){
-         //----item----
-         const quantity = document.getElementById(numOfItemId).value;
+      //----------------- function of decreased item & price ---------------------
+      function decreasedValue(itemId, priceId, singleItemPrice) {
+         // --- get item value---
+         const quantity = document.getElementById(itemId).value;
          const quantityNumber = parseInt(quantity);
-         if(quantityNumber >=1 ){
-            const updatedQuantity = quantityNumber -1;
-            document.getElementById(numOfItemId).value = updatedQuantity;
-
-            //----get Price----
+         if (quantityNumber >= 1) {
+            const updatedQuantity = quantityNumber - 1;
+            // --- set item value---      
+            document.getElementById(itemId).value = updatedQuantity;
+            // --- get price value---
             const priceValue = document.getElementById(priceId).innerText;
 
-            //----set Price----
-            const totalDecreasedPrice = itemPrice * updatedQuantity;
+            totalDecreasedPrice = singleItemPrice * updatedQuantity;
+            // --- set price value---
             document.getElementById(priceId).innerText = totalDecreasedPrice;
-            //----subtotal----
-            const subTotal = document.getElementById("subTotal").innerText;
-            console.log(subTotal);
-            const subTotalNumber = parseInt(subTotal);
-            console.log(subTotalNumber);
-            document.getElementById("subTotal").innerText = subTotalNumber - itemPrice;
-            //----tax----
-            const tax = document.getElementById("tax").innerText;
-            const taxNumber = parseInt(tax);
-            document.getElementById("total").innerText = subTotalNumber - itemPrice - taxNumber;
+            subTotalDecreased(singleItemPrice , itemId);
          }
       }
+      //----------------- function of total increased  ---------------------
+      function  subTotalIncreased(singleItemPrice, itemId){
+         // --- get subtotal ---
+         const subTotal = document.getElementById("subTotal").innerText;
+         const subTotalNumber = parseInt(subTotal);
+         // console.log('subTotalNumber',subTotalNumber);
+         // --- set subtotal ---
+         document.getElementById("subTotal").innerText = subTotalNumber + singleItemPrice;
 
+         // --- get tax ---
+         const tax = document.getElementById("tax").innerText;
+         const taxNumber = parseInt(tax);
+         // --- set total ---
+         document.getElementById("total").innerText = subTotalNumber + singleItemPrice + taxNumber;
+      }
+      //----------------- function of total decreased  ---------------------
+      function  subTotalDecreased(singleItemPrice ,itemId){
+         // --- get subtotal ---
+         const subTotal = document.getElementById("subTotal").innerText;
+         const subTotalNumber = parseInt(subTotal);
+         // --- set subtotal ---
+         document.getElementById("subTotal").innerText = subTotalNumber - singleItemPrice;
+
+         // --- get tax ---
+         const tax = document.getElementById("tax").innerText;
+         const taxNumber = parseInt(tax);
+         // --- set total ---
+         document.getElementById("total").innerText = subTotalNumber - singleItemPrice + taxNumber;
+         
+         if (itemId == 0) {
+            document.getElementById("total").innerText = 0;
+         }
+      }
    </script>
 </body>
 

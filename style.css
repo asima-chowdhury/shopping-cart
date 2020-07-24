@@ -4,7 +4,7 @@ body{
 .cart{
 	margin: 100px 0;
 	/* background-color: #F6F5FA; */
-	background-image: linear-gradient(90deg, #07f8c3 0%, #4289ff 100%);
+	background-image: linear-gradient(45deg, #07f8c3 0%, #4289ff 100%);
 	padding: 60px 0;
 }
 .total-price{
